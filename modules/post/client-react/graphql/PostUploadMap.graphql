@@ -1,0 +1,4 @@
+fragment PostIInfo on Comment {
+  id
+  content
+}

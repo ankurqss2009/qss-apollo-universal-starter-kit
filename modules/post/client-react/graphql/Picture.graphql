@@ -1,0 +1,7 @@
+fragment PictureInfo on File {
+  id
+  name
+  type
+  size
+  path
+}

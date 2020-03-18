@@ -1,0 +1,7 @@
+#import "./Picture.graphql"
+
+mutation uploadFiles($files: [FileUpload]!) {
+  uploadFiles(files: $files) {
+    ...PictureInfo
+  }
+}
