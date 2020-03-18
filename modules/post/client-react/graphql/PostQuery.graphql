@@ -1,11 +1,15 @@
 #import "./Post.graphql"
 #import "./Comment.graphql"
+#import "./Picture.graphql"
 
 query post($id: Int!) {
   post(id: $id) {
     ...PostInfo
     comments {
       ...CommentInfo
+    }
+    pictures {
+      ...PictureInfo
     }
   }
 }

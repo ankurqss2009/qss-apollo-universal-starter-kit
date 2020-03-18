@@ -1,5 +1,6 @@
 {
   "navLink": "Posts",
+  "message": "Click here to attach image or drag and drop an image file here.",
   "comment": {
     "title": "Comments",
     "label": {
@@ -26,7 +27,7 @@
     "noPostsMsg": "There are no posts yet.",
     "btn": {
       "edit": "Edit",
-      "submit": "Update",
+      "submit": "Publish",
       "del": "Delete",
       "back": "Back"
     },
@@ -40,7 +41,13 @@
       "content": "Content"
     }
   },
-
+  "table": {
+    "column": {
+      "name": "File name",
+      "actions": "Actions"
+    },
+    "btnDel": "Delete"
+  },
   "list": {
     "title": "Posts",
     "meta": "A List of All Posts page example",

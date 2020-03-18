@@ -18,6 +18,12 @@ exports.up = function(knex, Promise) {
         table.string('content');
         table.timestamps(false, true);
       })
+      .createTable('post_picture_map', table => {
+        table.increments();
+        table.integer('post_id');
+        table.integer('picture_id');
+        table.timestamps(false, true);
+      })
   ]);
 };
 

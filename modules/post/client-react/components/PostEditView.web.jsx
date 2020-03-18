@@ -11,7 +11,7 @@ import PostForm from './PostForm';
 import PostComments from '../containers/PostComments';
 
 const onSubmit = (post, editPost) => values => {
-  editPost(post.id, values.title, values.content);
+  editPost(post.id, values.title, values.content, values.pictures.map(({ id }) => id));
 };
 
 const PostEditView = ({ loading, post, match, location, subscribeToMore, editPost, t }) => {
@@ -48,7 +48,7 @@ const PostEditView = ({ loading, post, match, location, subscribeToMore, editPos
         <h2>
           {t(`post.label.edit`)} {t('post.label.post')}
         </h2>
-        <PostForm onSubmit={onSubmit(postObj, editPost)} post={post} />
+        <PostForm postId={Number(match.params.id)} onSubmit={onSubmit(postObj, editPost)} post={post} />
         <br />
         {postObj && (
           <PostComments

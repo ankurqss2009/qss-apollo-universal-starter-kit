@@ -1,3 +1,6 @@
 mutation uploadFiles($files: [FileUpload]!) {
-  uploadFiles(files: $files)
+  uploadFiles(files: $files) {
+    id
+    name
+  }
 }

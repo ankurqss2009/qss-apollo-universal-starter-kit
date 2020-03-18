@@ -128,7 +128,6 @@ const PostCommentsWithApollo = compose(
           },
           update: (cache, { data: { addComment } }) => {
             const prevPost = getPostFromCache(cache, postId);
-
             if (prevPost.post) {
               const { post } = onAddComment(prevPost, addComment);
               writePostToCache(cache, post, postId);

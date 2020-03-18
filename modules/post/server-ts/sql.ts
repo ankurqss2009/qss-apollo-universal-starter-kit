@@ -29,8 +29,26 @@ export default class PostDAO {
       .select('id', 'content', 'post_id AS postId')
       .from('comment')
       .whereIn('post_id', postIds);
-
     return orderedFor(res, postIds, 'postId', false);
+  }
+
+  public async getPicturesForPostIds(postIds: number[]) {
+    const res = await knex
+      .select('id', 'post_id AS postId', 'picture_id AS pictureId')
+      .from('post_picture_map')
+      .whereIn('post_id', postIds);
+    return res;
+  }
+
+  public async addPicture(postId: number, pictureIds: number[]) {
+    const fieldsToInsert = pictureIds.map(pictureId => ({ picture_id: pictureId, post_id: postId }));
+    return returnId(knex('post_picture_map')).insert(fieldsToInsert);
+  }
+
+  public async deletePicture(postId: number) {
+    return knex('post_picture_map')
+      .where('post_id', '=', postId)
+      .del();
   }
 
   public getTotal() {
@@ -47,8 +65,8 @@ export default class PostDAO {
       .first();
   }
 
-  public addPost(params: Post) {
-    return returnId(knex('post')).insert(params);
+  public addPost({ title, content }: Post) {
+    return returnId(knex('post')).insert({ title, content });
   }
 
   public deletePost(id: number) {

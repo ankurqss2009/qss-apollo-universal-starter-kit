@@ -23,8 +23,9 @@ export default () => ({
         );
 
         // save files data into DB
-        await Upload.saveFiles(uploadedFiles);
-        return true;
+        const [id] = await Upload.saveFiles(uploadedFiles);
+        const file = await Upload.file(id);
+        return file;
       } catch (e) {
         throw new Error(t('upload:fileNotLoaded'));
       }

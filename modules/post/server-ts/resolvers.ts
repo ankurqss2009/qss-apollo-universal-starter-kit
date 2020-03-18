@@ -65,12 +65,18 @@ export default (pubsub: PubSub) => ({
   Post: {
     comments: createBatchResolver((sources, args, context) => {
       return context.Post.getCommentsForPostIds(sources.map(({ id }) => id));
+    }),
+    pictures: createBatchResolver((sources, args, context) => {
+      return context.Post.getPicturesForPostIds(sources.map(({ id }) => id)).then(pictureMap => {
+        return [context.Upload.files(pictureMap.map(({ pictureId }) => pictureId))];
+      });
     })
   },
   Mutation: {
     async addPost(obj: any, { input }: PostInput, context: any) {
       const [id] = await context.Post.addPost(input);
       const post = await context.Post.post(id);
+      context.Post.addPicture(id, input.pictureIds);
       // publish for post list
       pubsub.publish(POSTS_SUBSCRIPTION, {
         postsUpdated: {
@@ -109,6 +115,9 @@ export default (pubsub: PubSub) => ({
     async editPost(obj: any, { input }: PostInputWithId, context: any) {
       await context.Post.editPost(input);
       const post = await context.Post.post(input.id);
+      await context.Post.deletePicture(input.id);
+      context.Post.addPicture(input.id, input.pictureIds);
+
       // publish for post list
       pubsub.publish(POSTS_SUBSCRIPTION, {
         postsUpdated: {
